@@ -1,0 +1,31 @@
+name: Test Actions
+on:
+  - push
+
+permissions:
+  actions: write
+
+concurrency:
+  group: test-actions
+  cancel-in-progress: true
+
+jobs:
+  test-actions:
+    name: Test actions
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        kicad-version:
+          - ''
+          - '9.0'
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Setup Kicad
+        id: test
+        uses: ./setup-kicad
+        with:
+          version: ${{ matrix.kicad-version }}
