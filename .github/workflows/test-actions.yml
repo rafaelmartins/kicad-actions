@@ -24,8 +24,12 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
+      - name: Setup Kicad (default)
+        if: matrix.kicad-version == ''
+        uses: ./setup-kicad
+
       - name: Setup Kicad
-        id: test
+        if: matrix.kicad-version != ''
         uses: ./setup-kicad
         with:
           version: ${{ matrix.kicad-version }}
